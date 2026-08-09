@@ -30,8 +30,11 @@
   --brass-gradient-hover:linear-gradient(135deg,#f4dcae 0%,#d5a856 42%,#af8036 78%,#d5a856 100%);
   --steel-gradient:linear-gradient(155deg,#232d37 0%,#141a20 42%,#0c1014 70%,#1c252d 100%);
   --steel-gradient-2:linear-gradient(155deg,#2c3742 0%,#1a222a 55%,#232d37 100%);
-  --plate-gradient:linear-gradient(150deg,#4a5762 0%,#37424c 30%,#252e37 62%,#3c4750 100%);
-  --plate-line:rgba(238,241,238,.2);
+  --plate-gradient:linear-gradient(155deg,#8b96a1 0%,#5c6874 14%,#333d47 34%,#161c22 52%,#2b333c 68%,#57626d 86%,#232a31 100%);
+  --plate-line:rgba(238,241,238,.28);
+  --plate-brushed:
+    repeating-linear-gradient(97deg, rgba(255,255,255,.16) 0px, rgba(255,255,255,.16) 1px, rgba(0,0,0,.16) 1px, rgba(0,0,0,.16) 2px, transparent 2px, transparent 5px),
+    linear-gradient(112deg, transparent 22%, rgba(255,255,255,.05) 40%, rgba(255,255,255,.65) 49%, rgba(255,255,255,.75) 50%, rgba(255,255,255,.05) 60%, transparent 78%);
   --avail:#3f7d63; --avail-soft:#e2ece6;
   --order:#9c6a35; --order-soft:#f1e6d8;
   --danger:#a1503c; --danger-soft:#f5e6e1;
@@ -222,21 +225,26 @@ body{margin:0;}
 .mz .hero-actions .btn-tel{color:var(--dark-ink-soft);}
 .mz .hero-actions .btn-tel:hover{color:var(--brass);}
 
-/* technical panel graphic — reads as a distinct metal plate set on the hero */
+/* technical panel graphic — reads as a distinct brushed metal plate set on the hero */
 .mz .spec-panel{
   position:relative; background:var(--plate-gradient);
-  box-shadow:inset 0 0 0 1px var(--plate-line), inset 0 1px 0 rgba(255,255,255,.22), inset 0 -10px 24px rgba(0,0,0,.28), 0 30px 60px rgba(0,0,0,.4);
+  box-shadow:inset 0 0 0 1px var(--plate-line), inset 0 2px 0 rgba(255,255,255,.4), inset 0 -3px 8px rgba(0,0,0,.55), 0 30px 60px rgba(0,0,0,.45);
   padding:22px; aspect-ratio:1/1.02; clip-path:var(--chamfer); transition:box-shadow .3s var(--ease);
   isolation:isolate;
 }
 .mz .spec-panel::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none; clip-path:var(--chamfer);
-  background-image:
-    repeating-linear-gradient(105deg, rgba(255,255,255,.09) 0px, rgba(255,255,255,.09) 1px, transparent 1px, transparent 3px),
-    linear-gradient(115deg, transparent 15%, rgba(255,255,255,.10) 42%, rgba(255,255,255,.16) 48%, rgba(255,255,255,.10) 54%, transparent 82%);
-  mix-blend-mode:overlay;
+  background-image:var(--plate-brushed);
 }
-.mz .spec-panel:hover{box-shadow:inset 0 0 0 1px var(--brass-soft-dark), inset 0 1px 0 rgba(255,255,255,.28), inset 0 -10px 24px rgba(0,0,0,.28), 0 30px 60px rgba(0,0,0,.45);}
+.mz .spec-panel:hover{box-shadow:inset 0 0 0 1px var(--brass-soft-dark), inset 0 2px 0 rgba(255,255,255,.46), inset 0 -3px 8px rgba(0,0,0,.55), 0 30px 60px rgba(0,0,0,.5);}
+.mz .rivet{
+  position:absolute; z-index:2; width:9px; height:9px; border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #f2f0e8 0%, #cfc9ba 22%, #8b8478 48%, #4a453c 74%, #241f19 100%);
+  box-shadow:0 1px 2px rgba(0,0,0,.6), inset 0 -1px 1px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.mz .rivet::after{content:""; position:absolute; left:50%; top:50%; width:5px; height:1px; background:rgba(0,0,0,.5); transform:translate(-50%,-50%) rotate(38deg); border-radius:1px;}
+.mz .rivet-tl{top:9px; left:9px;}
+.mz .rivet-br{bottom:9px; right:9px;}
 .mz .spec-panel-head{position:relative; z-index:1; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--dark-ink-soft); border-bottom:1px solid var(--plate-line); padding-bottom:14px; margin-bottom:14px;}
 .mz .spec-panel-grid{position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--plate-line); box-shadow:inset 0 0 0 1px var(--plate-line); border-radius:3px; overflow:hidden;}
 .mz .spec-cell{background:rgba(15,20,26,.42); aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:8px; transition:background .25s ease, transform .3s var(--ease); position:relative;}
@@ -249,11 +257,11 @@ body{margin:0;}
 .mz .spec-panel-foot b{color:var(--brass); font-weight:500;}
 
 /* ledger stat bar — a metal plate distinct from the hero behind it */
-.mz .ledger{background:var(--plate-gradient); border-top:1px solid var(--plate-line); position:relative; z-index:1; overflow:hidden;}
+.mz .ledger{background:var(--plate-gradient); border-top:1px solid var(--plate-line); position:relative; z-index:1; overflow:hidden;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35), inset 0 -3px 8px rgba(0,0,0,.5);}
 .mz .ledger::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image:repeating-linear-gradient(105deg, rgba(255,255,255,.06) 0px, rgba(255,255,255,.06) 1px, transparent 1px, transparent 3px);
-  mix-blend-mode:overlay;
+  background-image:var(--plate-brushed);
 }
 .mz .ledger-row{position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr);}
 @media (max-width:780px){.mz .ledger-row{grid-template-columns:repeat(2,1fr);}}
