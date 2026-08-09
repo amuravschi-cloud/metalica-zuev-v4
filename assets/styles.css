@@ -30,6 +30,8 @@
   --brass-gradient-hover:linear-gradient(135deg,#f4dcae 0%,#d5a856 42%,#af8036 78%,#d5a856 100%);
   --steel-gradient:linear-gradient(155deg,#232d37 0%,#141a20 42%,#0c1014 70%,#1c252d 100%);
   --steel-gradient-2:linear-gradient(155deg,#2c3742 0%,#1a222a 55%,#232d37 100%);
+  --plate-gradient:linear-gradient(150deg,#4a5762 0%,#37424c 30%,#252e37 62%,#3c4750 100%);
+  --plate-line:rgba(238,241,238,.2);
   --avail:#3f7d63; --avail-soft:#e2ece6;
   --order:#9c6a35; --order-soft:#f1e6d8;
   --danger:#a1503c; --danger-soft:#f5e6e1;
@@ -195,7 +197,10 @@ body{margin:0;}
 .mz .hero{position:relative; background:var(--steel-gradient); color:var(--dark-ink); overflow:hidden;}
 .mz .hero::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image:repeating-linear-gradient(112deg, rgba(255,255,255,.022) 0px, rgba(255,255,255,.022) 1px, transparent 1px, transparent 5px);
+  background-image:
+    repeating-linear-gradient(112deg, rgba(255,255,255,.05) 0px, rgba(255,255,255,.05) 1px, transparent 1px, transparent 3px, rgba(255,255,255,.02) 3px, transparent 4px),
+    linear-gradient(100deg, transparent 20%, rgba(255,255,255,.05) 46%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.05) 54%, transparent 80%);
+  mix-blend-mode:overlay;
 }
 .mz .hero::after{
   content:""; position:absolute; left:-10%; top:-30%; width:60%; height:90%; z-index:0; pointer-events:none;
@@ -217,30 +222,43 @@ body{margin:0;}
 .mz .hero-actions .btn-tel{color:var(--dark-ink-soft);}
 .mz .hero-actions .btn-tel:hover{color:var(--brass);}
 
-/* technical panel graphic */
+/* technical panel graphic — reads as a distinct metal plate set on the hero */
 .mz .spec-panel{
-  position:relative; background:var(--steel-gradient-2);
-  box-shadow:inset 0 0 0 1px var(--dark-line), inset 0 1px 0 rgba(255,255,255,.06);
+  position:relative; background:var(--plate-gradient);
+  box-shadow:inset 0 0 0 1px var(--plate-line), inset 0 1px 0 rgba(255,255,255,.22), inset 0 -10px 24px rgba(0,0,0,.28), 0 30px 60px rgba(0,0,0,.4);
   padding:22px; aspect-ratio:1/1.02; clip-path:var(--chamfer); transition:box-shadow .3s var(--ease);
+  isolation:isolate;
 }
-.mz .spec-panel:hover{box-shadow:inset 0 0 0 1px var(--brass-soft-dark), inset 0 1px 0 rgba(255,255,255,.08), 0 20px 50px rgba(0,0,0,.35);}
-.mz .spec-panel-head{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--dark-ink-faint); border-bottom:1px solid var(--dark-line); padding-bottom:14px; margin-bottom:14px;}
-.mz .spec-panel-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--dark-line); box-shadow:inset 0 0 0 1px var(--dark-line); border-radius:3px; overflow:hidden;}
-.mz .spec-cell{background:var(--dark-2); aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:8px; transition:background .25s ease, transform .3s var(--ease); position:relative;}
-.mz .spec-cell:hover{background:#28323c; transform:scale(1.04); z-index:2;}
+.mz .spec-panel::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none; clip-path:var(--chamfer);
+  background-image:
+    repeating-linear-gradient(105deg, rgba(255,255,255,.09) 0px, rgba(255,255,255,.09) 1px, transparent 1px, transparent 3px),
+    linear-gradient(115deg, transparent 15%, rgba(255,255,255,.10) 42%, rgba(255,255,255,.16) 48%, rgba(255,255,255,.10) 54%, transparent 82%);
+  mix-blend-mode:overlay;
+}
+.mz .spec-panel:hover{box-shadow:inset 0 0 0 1px var(--brass-soft-dark), inset 0 1px 0 rgba(255,255,255,.28), inset 0 -10px 24px rgba(0,0,0,.28), 0 30px 60px rgba(0,0,0,.45);}
+.mz .spec-panel-head{position:relative; z-index:1; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--dark-ink-soft); border-bottom:1px solid var(--plate-line); padding-bottom:14px; margin-bottom:14px;}
+.mz .spec-panel-grid{position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--plate-line); box-shadow:inset 0 0 0 1px var(--plate-line); border-radius:3px; overflow:hidden;}
+.mz .spec-cell{background:rgba(15,20,26,.42); aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:8px; transition:background .25s ease, transform .3s var(--ease); position:relative;}
+.mz .spec-cell:hover{background:rgba(15,20,26,.2); transform:scale(1.04); z-index:2;}
 .mz .spec-cell svg{width:34px; height:34px; color:var(--dark-ink-soft); transition:color .25s ease, transform .3s var(--ease);}
 .mz .spec-cell:hover svg{transform:translateY(-2px);}
 .mz .spec-cell:hover svg{color:var(--brass);}
-.mz .spec-cell span{font-family:var(--font-mono); font-size:9.5px; color:var(--dark-ink-faint); text-align:center; letter-spacing:.02em;}
-.mz .spec-panel-foot{display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:14px; border-top:1px solid var(--dark-line); font-family:var(--font-mono); font-size:10px; color:var(--dark-ink-faint); letter-spacing:.06em; text-transform:uppercase;}
+.mz .spec-cell span{position:relative; z-index:1; font-family:var(--font-mono); font-size:9.5px; color:var(--dark-ink-soft); text-align:center; letter-spacing:.02em;}
+.mz .spec-panel-foot{position:relative; z-index:1; display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:14px; border-top:1px solid var(--plate-line); font-family:var(--font-mono); font-size:10px; color:var(--dark-ink-soft); letter-spacing:.06em; text-transform:uppercase;}
 .mz .spec-panel-foot b{color:var(--brass); font-weight:500;}
 
-/* ledger stat bar */
-.mz .ledger{background:var(--steel-gradient-2); border-top:1px solid var(--dark-line); position:relative; z-index:1;}
-.mz .ledger-row{display:grid; grid-template-columns:repeat(4,1fr);}
+/* ledger stat bar — a metal plate distinct from the hero behind it */
+.mz .ledger{background:var(--plate-gradient); border-top:1px solid var(--plate-line); position:relative; z-index:1; overflow:hidden;}
+.mz .ledger::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:repeating-linear-gradient(105deg, rgba(255,255,255,.06) 0px, rgba(255,255,255,.06) 1px, transparent 1px, transparent 3px);
+  mix-blend-mode:overlay;
+}
+.mz .ledger-row{position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr);}
 @media (max-width:780px){.mz .ledger-row{grid-template-columns:repeat(2,1fr);}}
 .mz .lstat{
-  padding:28px 26px; border-left:1px solid var(--dark-line); position:relative; overflow:hidden;
+  padding:28px 26px; border-left:1px solid var(--plate-line); position:relative; overflow:hidden;
   transition:background .3s ease;
 }
 .mz .lstat::after{
@@ -250,7 +268,7 @@ body{margin:0;}
 .mz .lstat:hover{background:rgba(255,255,255,.03);}
 .mz .lstat:hover::after{transform:scaleX(1);}
 .mz .lstat:first-child{border-left:none;}
-@media (max-width:780px){ .mz .lstat:nth-child(2n+1){border-left:none;} .mz .lstat:nth-child(n+3){border-top:1px solid var(--dark-line);} }
+@media (max-width:780px){ .mz .lstat:nth-child(2n+1){border-left:none;} .mz .lstat:nth-child(n+3){border-top:1px solid var(--plate-line);} }
 .mz .lstat .num{display:block; font-family:var(--font-display); font-size:clamp(24px,2.6vw,32px); font-weight:700; color:var(--dark-ink); transition:transform .3s var(--ease);}
 .mz .lstat:hover .num{transform:translateY(-2px);}
 .mz .lstat .lbl{font-size:13px; color:var(--dark-ink-soft); margin-top:6px;}
